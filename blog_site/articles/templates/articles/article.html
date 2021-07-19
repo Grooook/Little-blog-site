@@ -1,0 +1,63 @@
+{% extends 'base.html' %} 
+
+{% block title %}{{ article.title }}{% endblock %} 
+
+
+
+{% block content %} 
+    <div class="container p-5">
+        <div class="container p-5">
+            <h3>{{article.title}}</h3>
+            {{article.text}}
+            <br>
+            <div class="container pt-5">
+                <form action="{% url 'articles:leave_coment' article.id %}" class="form" method="POST">
+
+                    {% csrf_token %}
+                        <textarea class="form-control form-control-lg" name="text" required="" placeholder="Leave your coment" cols="15" rows="5"></textarea><br>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="d-flex btn btn-primary justify-content-end">Leave comment</button>
+                    </div>
+                </form>
+                {% for comment in comments%}
+                    <div class="d-flex justify-content-between m-3">
+                        <div class="container">
+                        <strong>{{comment.author}}:</strong>  {{comment.text}} 
+                        <em>{{comment.date}}</em>
+                        <br>
+                        </div>
+                        {% if request.user.is_authenticated %} 
+                            {% if request.user == comment.author %}
+                            <div class="ms-3">
+                                <a href="{% url 'articles:delete_comment' comment.id %}" class="text-decoration-none link-dark">
+                                    <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="25"
+                                    height="25"
+                                    fill="currentColor"
+                                    class="bi bi-trash"
+                                    viewBox="0 0 16 16"
+                                    >
+                                    <path
+                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+                                    />
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                                    />
+                                    </svg>
+                                </a>
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                        
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+          
+        
+    </div>
+    
+{% endblock %}

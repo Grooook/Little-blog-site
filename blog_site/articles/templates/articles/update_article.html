@@ -1,0 +1,32 @@
+{% extends 'base.html' %} 
+{% block title %}Update article{% endblock %} 
+{% block content %} 
+
+
+<div class="container">
+    <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <h6 class="border-bottom pb-2 mb-0">Update article</h6>
+
+        <form action="{% url 'articles:update_article' article.id %}" class="form" method="POST">
+            {% csrf_token %}
+            
+            {% for field in form%}
+                <div class="mb-3">
+                     {{field}}
+                </div>
+                   
+                
+            {% endfor %}
+            {{form.errors}}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-success">Update</button>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+ 
+
+
+{% endblock %}

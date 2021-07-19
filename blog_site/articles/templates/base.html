@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+{% comment %} {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'haudi/css/bootstrap.css' %}"/> {% endcomment %}
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}My blog {% endblock %}</title>
+  </head>
+  <body>
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark  p-0 ">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'articles:index' %}">Blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0"></ul>
+
+          {% if not request.user.is_authenticated %}
+              <span class="navbar-text">
+                <a class="nav-link" href="{% url 'accounts:register' %}" >Sign Up</a>
+              </span>
+              <span class="navbar-text">
+                <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+              </span>
+
+          {% else %}
+            <a class="nav-link" href="{% url 'articles:add_article' %}" tabindex="-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
+            </a>
+            <span class="navbar-text">
+              <a class="nav-link" href="{% url 'accounts:logout' %}" tabindex="-1">Logout from {{request.user}}</a>
+            </span>
+          {% endif %}
+
+          {% comment %} <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form> {% endcomment %}
+        </div>
+      </div>
+    </nav>
+    
+    {% block content %}{% endblock %}
+    
+  </body>
+</html>
