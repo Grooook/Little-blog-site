@@ -1,2 +1,3 @@
 # Little-blog-site
-![main paige](http://url/to/img.png)
+![main paige](https://github.com/Grooook/Little-blog-site/blob/master/img/main.png)
+![main paige](https://github.com/Grooook/Little-blog-site/blob/master/img/post.png)
