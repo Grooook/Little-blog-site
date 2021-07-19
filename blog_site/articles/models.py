@@ -10,6 +10,9 @@ class Article(models.Model):
 
     def __str__(self) -> str:
         return str(self.title)
+    
+    def get_cut_text(self):
+        return f'{str(self.text)[:70]}...'
 
     class Meta:
         managed = True

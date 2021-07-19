@@ -7,6 +7,8 @@ from django.contrib import messages
 
 def index(request):
     articles = Article.objects.all().order_by('-date')
+    for article in articles:
+        article.text = article.get_cut_text()
     content = {
         'articles':articles,
     }
